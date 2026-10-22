@@ -1,0 +1,31 @@
+{
+  "name": "kisan-setu",
+  "version": "8.0.1",
+  "description": "Kisan Setu - direct farm-to-buyer market for India: real login (mobile + password/OTP) for five portals, MongoDB + Redis, Gemini Crop Doctor, live mandi prices, Riya voice assistant, 23 languages.",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node build.cjs",
+    "start": "node server.cjs",
+    "test": "node --test",
+    "i18n": "python3 i18n/gen.py",
+    "fetch-photos": "node scripts/fetch-real-photos.cjs",
+    "demo": "node scripts/demo.cjs",
+    "demo:headless": "node scripts/demo.cjs --headless",
+    "db:check": "node scripts/db-check.cjs",
+    "seed:data": "node scripts/seed-data.cjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "playwright": "^1.48.0"
+  },
+  "dependencies": {
+    "mongodb": "^6.8.0",
+    "ioredis": "^5.4.1"
+  }
+}

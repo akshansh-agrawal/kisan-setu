@@ -1,0 +1,25 @@
+# docker compose up -d        -> MongoDB + Redis (+ the app). Run `npm run build` first so ./dist exists.
+# Only databases:  docker compose up -d mongo redis   and run the app with `npm start` using the URIs below.
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes: [mongo-data:/data/db]
+    ports: ["127.0.0.1:27017:27017"]
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "volatile-lru"]
+    volumes: [redis-data:/data]
+    ports: ["127.0.0.1:6379:6379"]
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on: [mongo, redis]
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: production
+    ports: ["8787:8787"]
+volumes: { mongo-data: {}, redis-data: {} }
